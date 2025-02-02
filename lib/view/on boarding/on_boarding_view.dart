@@ -69,6 +69,9 @@ class _OnBoardingViewState extends State<OnBoardingView> {
         ),
         //! Smooth Page Indicator
         SmoothPageIndicator(
+          onDotClicked: (index) {
+            pageController.jumpToPage(index);
+          },
           controller: pageController,
           count: 7, // Total pages
           effect: WormEffect(
