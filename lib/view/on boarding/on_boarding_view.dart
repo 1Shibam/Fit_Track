@@ -71,9 +71,10 @@ class _OnBoardingViewState extends State<OnBoardingView> {
         SmoothPageIndicator(
           controller: pageController,
           count: 7, // Total pages
-          effect: ExpandingDotsEffect(
-            dotHeight: 8,
-            dotWidth: 8,
+          effect: WormEffect(
+            radius: 20,
+            dotHeight: 10,
+            dotWidth: 10,
             activeDotColor: Colors.blue, // Change to match your theme
             dotColor: AppColors.neutralColorMediumGray,
           ),
