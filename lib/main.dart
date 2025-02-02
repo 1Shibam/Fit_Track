@@ -1,3 +1,4 @@
+import 'package:be_fit/common/color_extension.dart';
 import 'package:be_fit/view/on%20boarding/on_boarding_view.dart';
 import 'package:flutter/material.dart';
 
@@ -13,11 +14,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Be-Fit',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+          primaryColor: AppColors.primaryColorRed,
+          useMaterial3: true,
+          fontFamily: 'Lexend'),
+          
       home: const OnBoardingView(),
     );
   }
 }
-
