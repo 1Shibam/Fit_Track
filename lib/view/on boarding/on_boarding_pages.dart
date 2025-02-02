@@ -1,3 +1,4 @@
+import 'package:be_fit/common/color_extension.dart';
 import 'package:be_fit/common/text_style.dart';
 import 'package:flutter/material.dart';
 
@@ -25,14 +26,24 @@ class OnBoardingPages extends StatelessWidget {
           children: [
             Image.asset(imagePath),
             const SizedBox(height: 12),
-            Text(title, style: AppTextStyles.heading3),
+            Text(
+              title,
+              style: AppTextStyles.heading3,
+              textAlign: TextAlign.center,
+            ),
             if (subtitle != null)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 6),
-                child: Text(subtitle!, style: AppTextStyles.body1, textAlign: TextAlign.center),
+                child: Text(subtitle!,
+                    style: AppTextStyles.body1, textAlign: TextAlign.center),
               ),
-            const SizedBox(height: 12),
-            button ?? const SizedBox.shrink(), // Avoids extra space if button is null
+            const SizedBox(height: 24),
+            Container(
+              decoration: BoxDecoration(
+                  color: AppColors.primaryColorBlue.withOpacity(.6),
+                  borderRadius: BorderRadius.circular(20)),
+              child: button ?? const SizedBox.shrink(),
+            ), // Avoids extra space if button is null
           ],
         ),
       ),
