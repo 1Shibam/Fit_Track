@@ -12,12 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Be-Fit',
       theme: ThemeData(
           primaryColor: AppColors.primaryColorRed,
           useMaterial3: true,
           fontFamily: 'Lexend'),
-          
       home: const OnBoardingView(),
     );
   }
