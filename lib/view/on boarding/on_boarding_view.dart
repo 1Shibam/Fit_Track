@@ -25,14 +25,12 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     return Scaffold(
         appBar: AppBar(
           actions: [
-            Container(
-              child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'SKIP',
-                    style: AppTextStyles.body1,
-                  )),
-            )
+            TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'SKIP',
+                  style: AppTextStyles.body1,
+                ))
           ],
         ),
         body: Column(

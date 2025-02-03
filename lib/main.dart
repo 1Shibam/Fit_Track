@@ -11,17 +11,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Fit-Track',
-
+      title: 'Be-Fit',
       theme: ThemeData(
           primaryColor: AppColors.primaryColorRed,
           useMaterial3: true,
           fontFamily: 'Lexend'),
-      //! Route information parser
-
-      //! Router delegate
+      home: const OnBoardingView(),
     );
   }
 }
