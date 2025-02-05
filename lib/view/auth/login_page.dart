@@ -11,7 +11,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: Text('Signup'),),
+      body: Center(
+        child: Text('login'),
+      ),
     );
   }
 }
