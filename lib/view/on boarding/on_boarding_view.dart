@@ -1,7 +1,10 @@
 import 'package:be_fit/common/color_extension.dart';
 import 'package:be_fit/common/text_style.dart';
+import 'package:be_fit/preferences/on_boarding_perference.dart';
+
 import 'package:be_fit/view/on%20boarding/on_boarding_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingView extends StatefulWidget {
@@ -26,7 +29,10 @@ class _OnBoardingViewState extends State<OnBoardingView> {
         appBar: AppBar(
           actions: [
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  setOnBoardingStatus(true);
+                  context.go('/login');
+                },
                 child: const Text(
                   'SKIP',
                   style: AppTextStyles.body1,
