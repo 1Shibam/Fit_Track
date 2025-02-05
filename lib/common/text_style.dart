@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTextStyles {
+
   //! Headings
   static const TextStyle heading1 = TextStyle(
     fontFamily: 'Lexend',
