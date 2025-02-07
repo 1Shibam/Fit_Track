@@ -11,6 +11,7 @@ class BuildTextField extends StatelessWidget {
   final Widget? suffWidget;
   final Widget? preWidget;
   final String? Function(String?)? validator;
+  final Function(void)? submitField;
 
   const BuildTextField({
     super.key,
@@ -21,6 +22,7 @@ class BuildTextField extends StatelessWidget {
     this.preWidget,
     this.suffWidget,
     this.validator,
+    this.submitField
   });
 
   @override
@@ -31,12 +33,14 @@ class BuildTextField extends StatelessWidget {
       controller: controller,
       obscureText: isPassword,
       validator: validator,
+      onFieldSubmitted: submitField,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 8.h),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(4.0),
           child: preWidget,
         ),
+        
         suffixIcon: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
           child: suffWidget,
