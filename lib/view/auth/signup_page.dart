@@ -15,6 +15,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  bool isVisible = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,13 +29,30 @@ class _SignUpPageState extends State<SignUpPage> {
             Form(
               child: Column(
                 children: [
-                  const BuildTextField(label: 'Full Name'),
-                  SizedBox(height: 10.h),
-                  const BuildTextField(label: 'Email'),
+                  const BuildTextField(
+                    label: 'Full Name',
+                    preWidget: Icon(Icons.person),
+                  ),
                   SizedBox(height: 10.h),
                   const BuildTextField(
+                    label: 'Email',
+                    preWidget: Icon(Icons.email),
+                  ),
+                  SizedBox(height: 10.h),
+                  BuildTextField(
+                    preWidget: const Icon(Icons.lock),
                     label: 'Password',
-                    isPassword: true,
+                    isPassword: isVisible,
+                    suffWidget: IconButton(
+                        onPressed: () => setState(() {
+                              isVisible = !isVisible;
+                            }),
+                        icon: Icon(
+                          isVisible ? Icons.visibility_off : Icons.visibility,
+                          color: isVisible
+                              ? AppColors.neutralColorMediumGray
+                              : AppColors.primaryColorOrange,
+                        )),
                   ),
                   SizedBox(height: 10.h),
                   SizedBox(height: 10.h),
