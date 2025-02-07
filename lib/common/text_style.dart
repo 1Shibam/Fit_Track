@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppTextStyles {
   //! Headings
   static TextStyle heading1 = TextStyle(
-    
     fontFamily: 'Lexend',
     fontSize: 32.sp,
     fontWeight: FontWeight.bold,
@@ -20,7 +19,7 @@ class AppTextStyles {
 
   static TextStyle heading3 = TextStyle(
     fontFamily: 'Lexend',
-    fontSize: 24.sp,
+    fontSize: 20.sp,
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
