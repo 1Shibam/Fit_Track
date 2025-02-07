@@ -1,5 +1,3 @@
-
-
 import 'package:be_fit/common%20widgets/build_primary_button.dart';
 import 'package:be_fit/common%20widgets/build_text_field.dart';
 import 'package:be_fit/common/color_extension.dart';
@@ -9,9 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +32,10 @@ class SignUpPage extends StatelessWidget {
                   SizedBox(height: 10.h),
                   const BuildTextField(label: 'Email'),
                   SizedBox(height: 10.h),
-                  const BuildTextField(label: 'Password', isPassword: true,),
+                  const BuildTextField(
+                    label: 'Password',
+                    isPassword: true,
+                  ),
                   SizedBox(height: 10.h),
                   SizedBox(height: 10.h),
                 ],
@@ -41,11 +47,12 @@ class SignUpPage extends StatelessWidget {
             RichText(
               text: TextSpan(
                 text: "Already have an account? ",
-                style: AppTextStyles.body1.copyWith(color: Colors.black),
+                style: AppTextStyles.body2.copyWith(color: Colors.black),
                 children: [
                   TextSpan(
                     text: "Log in",
-                    style: AppTextStyles.body1.copyWith(color: AppColors.primaryColorBlue),
+                    style: AppTextStyles.body1
+                        .copyWith(color: AppColors.primaryColorOrange),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => context.go('/login'),
                   ),
