@@ -19,7 +19,7 @@ class AppTextStyles {
 
   static TextStyle heading3 = TextStyle(
     fontFamily: 'Lexend',
-    fontSize: 20.sp,
+    fontSize: 24.sp,
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
@@ -49,7 +49,7 @@ class AppTextStyles {
 
   static TextStyle body2 = TextStyle(
     fontFamily: 'Lexend',
-    fontSize: 14.sp,
+    fontSize: 12.sp,
     fontWeight: FontWeight.normal,
     color: Colors.black87,
   );
