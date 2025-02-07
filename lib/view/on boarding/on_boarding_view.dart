@@ -33,7 +33,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                   setOnBoardingStatus(true);
                   context.go('/login');
                 },
-                child: const Text(
+                child: Text(
                   'SKIP',
                   style: AppTextStyles.body1,
                 ))
@@ -74,8 +74,11 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                                 WidgetStatePropertyAll(Colors.transparent),
                             shadowColor:
                                 WidgetStatePropertyAll(Colors.transparent)),
-                        onPressed: () {},
-                        child: const Text(
+                        onPressed: ()  {
+                          setOnBoardingStatus(true);
+                          context.go('/login');
+                        },
+                        child: Text(
                           'Get Started',
                           style: AppTextStyles.heading3,
                         )),
