@@ -11,7 +11,7 @@ class BuildPrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 12.h),
+      padding: EdgeInsets.symmetric(vertical: 8.h),
       decoration: BoxDecoration(
         gradient: AppColors.primaryGradient,
         borderRadius: BorderRadius.circular(12.r),
