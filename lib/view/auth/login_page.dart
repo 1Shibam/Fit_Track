@@ -1,5 +1,5 @@
-import 'package:be_fit/common%20widgets/build_primary_button.dart';
-import 'package:be_fit/common%20widgets/build_text_field.dart';
+import 'package:be_fit/view/auth/auth_widgets/build_primary_button.dart';
+import 'package:be_fit/view/auth/auth_widgets/build_text_field.dart';
 import 'package:be_fit/common/color_extension.dart';
 import 'package:be_fit/common/text_style.dart';
 
