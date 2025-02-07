@@ -46,6 +46,7 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
         backgroundColor: AppColors.primaryColorOrange,
       ));
+      context.go('/completeProfile');
     } else {
       setState(() {
         isAlerted = true;
