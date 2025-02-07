@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppTextStyles {
   //! Headings
   static TextStyle heading1 = TextStyle(
+    
     fontFamily: 'Lexend',
     fontSize: 32.sp,
     fontWeight: FontWeight.bold,
