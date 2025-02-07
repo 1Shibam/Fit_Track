@@ -8,6 +8,7 @@ import '../../common widgets/lottie_loading_animation.dart';
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
+//? more preferences can be added later on in the list if needed
   Future<List<bool>> getPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     bool hasSeenOnboarding = prefs.getBool('hasSeenOnBoarding') ?? false;
