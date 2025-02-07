@@ -15,7 +15,36 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  //! Text Editing controllers
+
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
+  //! Focus nodes
+  final nameFocus = FocusNode();
+  final emailFocus = FocusNode();
+  final passFocus = FocusNode();
+
+  //! bool for password visibitly toggle
   bool isVisible = true;
+
+  //! Form key
+  final formKey = GlobalKey<FormState>();
+
+  /// Handle form submission
+  void submitForm() {
+    if (formKey.currentState!.validate()) {
+      // Process login
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          'Login Successful!',
+          style: AppTextStyles.body2,
+        ),
+        backgroundColor: AppColors.primaryColorOrange,
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,22 +56,43 @@ class _SignUpPageState extends State<SignUpPage> {
             Text("Sign Up", style: AppTextStyles.heading1),
             SizedBox(height: 20.h),
             Form(
+              key: formKey,
               child: Column(
                 children: [
-                  const BuildTextField(
+                  BuildTextField(
+                    controller: nameController,
+                    focusNode: nameFocus,
                     label: 'Full Name',
-                    preWidget: Icon(Icons.person),
-                  ),
-                  SizedBox(height: 10.h),
-                  const BuildTextField(
-                    label: 'Email',
-                    preWidget: Icon(Icons.email),
+                    preWidget: const Icon(Icons.person),
+                    submitField: (_) {
+                      if (nameController.text.trim().isNotEmpty) {
+                        FocusScope.of(context).requestFocus(emailFocus);
+                      }
+                    },
+                    validator: validateName,
                   ),
                   SizedBox(height: 10.h),
                   BuildTextField(
+                    controller: emailController,
+                    focusNode: emailFocus,
+                    label: 'Email',
+                    preWidget: const Icon(Icons.email),
+                    submitField:(_) {
+                      if (nameController.text.trim().isNotEmpty) {
+                        FocusScope.of(context).requestFocus(passFocus);
+                      }
+                    },
+                    validator: validateEmail,
+                  ),
+                  SizedBox(height: 10.h),
+                  BuildTextField(
+                    controller: passController,
+                    focusNode: passFocus,
                     preWidget: const Icon(Icons.lock),
                     label: 'Password',
                     isPassword: isVisible,
+                    validator: validatePassword,
+                    submitField: (_) => submitForm(),
                     suffWidget: IconButton(
                         onPressed: () => setState(() {
                               isVisible = !isVisible;
@@ -60,7 +110,9 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
             SizedBox(height: 20.h),
-            const BuildPrimaryButton(text: 'Sign Up'),
+            GestureDetector(
+                onTap: submitForm,
+                child: const BuildPrimaryButton(text: 'Sign Up')),
             SizedBox(height: 10.h),
             RichText(
               text: TextSpan(
@@ -82,4 +134,35 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
+}
+
+/// name validation function
+String? validateName(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return 'name cant be empty';
+  }
+  return null;
+}
+
+/// Email validation function
+String? validateEmail(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return 'Email can\'t be empty';
+  }
+  final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+  if (!emailRegex.hasMatch(value)) {
+    return 'Enter a valid email';
+  }
+  return null;
+}
+
+/// Password validation function
+String? validatePassword(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Password can\'t be empty';
+  }
+  if (value.length < 6) {
+    return 'Password must be at least 6 characters';
+  }
+  return null;
 }
