@@ -1,3 +1,4 @@
+import 'package:be_fit/preferences/login_page_preference.dart';
 import 'package:be_fit/view/auth/auth_widgets/build_primary_button.dart';
 import 'package:be_fit/view/auth/auth_widgets/build_text_field.dart';
 import 'package:be_fit/common/color_extension.dart';
@@ -41,6 +42,8 @@ class _LoginPageState extends State<LoginPage> {
         ),
         backgroundColor: AppColors.primaryColorOrange,
       ));
+      setLoginPreference(true);
+      context.go('/completeProfile');
     }
   }
 
@@ -68,10 +71,10 @@ class _LoginPageState extends State<LoginPage> {
                   preWidget: const Icon(Icons.email),
                   label: 'Email',
                   submitField: (_) {
-                      if (emailController.text.trim().isNotEmpty) {
-                        FocusScope.of(context).requestFocus(passFocus);
-                      }
-                    },
+                    if (emailController.text.trim().isNotEmpty) {
+                      FocusScope.of(context).requestFocus(passFocus);
+                    }
+                  },
                   validator: validateEmail, // Pass function reference
                 ),
                 SizedBox(height: 16.h),
@@ -85,7 +88,8 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () => setState(() {
                       isVisible = !isVisible;
                     }),
-                    icon: Icon(isVisible ? Icons.visibility_off : Icons.visibility),
+                    icon: Icon(
+                        isVisible ? Icons.visibility_off : Icons.visibility),
                     color: isVisible
                         ? AppColors.neutralColorMediumGray
                         : AppColors.primaryColorOrange,
@@ -95,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 24.h),
                 GestureDetector(
-                   onTap: submitForm,
+                  onTap: submitForm,
                   child: const BuildPrimaryButton(
                     text: 'Login',
                     // Ensure button calls submitForm()
@@ -111,7 +115,8 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       TextSpan(
                         text: ' Sign Up',
-                        style: AppTextStyles.body2.copyWith(color: AppColors.primaryColorRed),
+                        style: AppTextStyles.body2
+                            .copyWith(color: AppColors.primaryColorRed),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             context.go('/signup');
