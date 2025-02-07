@@ -8,6 +8,8 @@ class BuildTextField extends StatelessWidget {
   final bool isPassword;
   final TextEditingController? controller;
   final FocusNode? focusNode;
+  final Widget? suffWidget;
+  final Widget? preWidget;
   final String? Function(String?)? validator;
 
   const BuildTextField({
@@ -16,17 +18,29 @@ class BuildTextField extends StatelessWidget {
     this.isPassword = false,
     this.controller,
     this.focusNode,
+    this.preWidget,
+    this.suffWidget,
     this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: AppTextStyles.body1,
       focusNode: focusNode,
       controller: controller,
       obscureText: isPassword,
       validator: validator,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 8.h),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: preWidget,
+        ),
+        suffixIcon: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+          child: suffWidget,
+        ),
         labelText: label,
         labelStyle: AppTextStyles.body1,
         border: OutlineInputBorder(
