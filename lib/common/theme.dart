@@ -5,8 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final ThemeData appTheme = ThemeData(
   inputDecorationTheme: InputDecorationTheme(
+    
     prefixIconColor: AppColors.primaryColorOrange,
     suffixIconColor: AppColors.primaryColorOrange,
+    alignLabelWithHint: true,
+    iconColor: AppColors.neutralColorMediumGray,
     floatingLabelStyle: TextStyle(color: AppColors.primaryColorOrange),
     filled: true,
     fillColor: Colors.white,
