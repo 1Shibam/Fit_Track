@@ -21,7 +21,7 @@ final goRouter = GoRouter(initialLocation: '/', routes: [
   GoRoute(
     path: '/signup',
     builder: (context, state) {
-      return const SignupPage();
+      return const SignUpPage();
     },
   ),
   GoRoute(
