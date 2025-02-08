@@ -1,5 +1,6 @@
 import 'package:be_fit/view/auth/login_page.dart';
 import 'package:be_fit/view/auth/signup_page.dart';
+
 import 'package:be_fit/view/complete_profile_view/complete_profile.dart';
 import 'package:be_fit/view/home/home_screen.dart';
 import 'package:be_fit/view/on%20boarding/on_boarding_view.dart';
@@ -43,4 +44,10 @@ final goRouter = GoRouter(initialLocation: '/', routes: [
       return const CompleteProfileView();
     },
   ),
+  // GoRoute(
+  //   path: '/chooseGoal',
+  //   builder: (context, state) {
+  //     return const ChooseGoalView();
+  //   },
+  // ),
 ]);
