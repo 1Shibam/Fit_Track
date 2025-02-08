@@ -3,6 +3,7 @@ import 'package:be_fit/common/text_style.dart';
 import 'package:be_fit/view/auth/auth_widgets/build_primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 
 class CompleteProfileView extends StatefulWidget {
@@ -129,7 +130,10 @@ class CompleteProfileViewState extends State<CompleteProfileView> {
                 ),
               ),
               GestureDetector(
-                  onTap: () {}, child: const BuildPrimaryButton(text: 'Next'))
+                  onTap: () {
+                    context.go('/chooseGoal');
+                  },
+                  child: const BuildPrimaryButton(text: 'Next'))
             ],
           ),
         ),
