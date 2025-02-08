@@ -101,8 +101,12 @@ class CompleteProfileViewState extends State<CompleteProfileView> {
                 child: TextField(
                   controller: weightController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.fitness_center,
+                      color: AppColors.primaryColorOrange,
+                    ),
+                    border: const OutlineInputBorder(),
                     hintText: "Enter weight (kg)",
                   ),
                 ),
@@ -114,8 +118,12 @@ class CompleteProfileViewState extends State<CompleteProfileView> {
                 child: TextField(
                   controller: heightController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.height,
+                      color: AppColors.primaryColorOrange,
+                    ),
+                    border: const OutlineInputBorder(),
                     hintText: "Enter height (cm)",
                   ),
                 ),
