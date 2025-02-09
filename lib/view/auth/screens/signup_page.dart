@@ -1,9 +1,12 @@
+import 'package:be_fit/common%20widgets/build_snackbar.dart';
+import 'package:be_fit/services/fireabase_auth_methods.dart';
 import 'package:be_fit/view/auth/auth_widgets/alternate_options.dart';
 import 'package:be_fit/view/auth/auth_widgets/build_primary_button.dart';
 import 'package:be_fit/view/auth/auth_widgets/build_text_field.dart';
 import 'package:be_fit/common/color_extension.dart';
 import 'package:be_fit/common/text_style.dart';
 import 'package:dashed_rect/dashed_rect.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,9 +39,14 @@ class _SignUpPageState extends State<SignUpPage> {
   final formKey = GlobalKey<FormState>();
 
   /// Handle form submission
-  void submitForm() {
+  void submitForm() async {
     if (formKey.currentState!.validate() && checkBoxController == true) {
-      // Process login
+      // Process Signup
+      FireabaseAuthMethods(FirebaseAuth.instance).signUpWithEmail(
+          email: emailController.text,
+          password: passController.text,
+          context: context);
+
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
           'Signup Successful!',
@@ -48,6 +56,10 @@ class _SignUpPageState extends State<SignUpPage> {
       ));
       context.go('/completeProfile');
     } else {
+      buildSnackBar(
+        context,
+        'Please enter the fields correctly',
+      );
       setState(() {
         isAlerted = true;
       });
@@ -70,7 +82,6 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Column(
                 children: [
                   BuildTextField(
-                    
                     controller: nameController,
                     focusNode: nameFocus,
                     label: 'Full Name',
