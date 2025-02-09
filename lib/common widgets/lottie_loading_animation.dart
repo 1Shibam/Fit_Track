@@ -7,9 +7,9 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 
 class LottieLoadingAnimation extends StatelessWidget {
   final double opacity;
-  const LottieLoadingAnimation({
-    super.key, this.opacity = 1
-  });
+  final double? height;
+  final double? width;
+  const LottieLoadingAnimation({super.key, this.opacity = 1, this.height, this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class LottieLoadingAnimation extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Lottie.asset('assets/animations/fitness lottie json.json',
-                height: 300.r, width: 300.r),
+                height: height?.r ?? 300.r , width: width?.r ?? 300.r),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
