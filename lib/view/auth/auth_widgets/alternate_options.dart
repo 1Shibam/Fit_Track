@@ -3,6 +3,7 @@ import 'package:be_fit/common/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class AlternateOptions extends StatelessWidget {
   const AlternateOptions({super.key});
@@ -46,7 +47,7 @@ class AlternateOptions extends StatelessWidget {
           height: 20.h,
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             GestureDetector(
                 child: SvgPicture.asset(
@@ -54,9 +55,6 @@ class AlternateOptions extends StatelessWidget {
               height: 48.h,
               width: 48.w,
             )),
-            SizedBox(
-              width: 60.w,
-            ),
             GestureDetector(
                 child: SvgPicture.asset(
               'assets/images/facebook icon.svg',
@@ -64,11 +62,12 @@ class AlternateOptions extends StatelessWidget {
               width: 48.w,
             )),
             GestureDetector(
+                onTap: () => context.go('/phoneSignup'),
                 child: SvgPicture.asset(
-              'assets/images/phone.svg',
-              height: 48.h,
-              width: 48.w,
-            )),
+                  'assets/images/phone.svg',
+                  height: 48.h,
+                  width: 48.w,
+                )),
           ],
         )
       ],
