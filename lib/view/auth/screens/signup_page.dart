@@ -47,13 +47,8 @@ class _SignUpPageState extends State<SignUpPage> {
           password: passController.text,
           context: context);
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-          'Signup Successful!',
-          style: AppTextStyles.body2,
-        ),
-        backgroundColor: AppColors.primaryColorOrange,
-      ));
+      buildSnackBar(context, 'Signed Up successflly!',
+          bgColor: AppColors.secondaryColorGreen);
       context.go('/completeProfile');
     } else {
       buildSnackBar(
