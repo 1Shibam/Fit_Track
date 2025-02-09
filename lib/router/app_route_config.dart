@@ -1,5 +1,6 @@
-import 'package:be_fit/view/auth/login_page.dart';
-import 'package:be_fit/view/auth/signup_page.dart';
+import 'package:be_fit/view/auth/screens/login_page.dart';
+import 'package:be_fit/view/auth/screens/signup_page.dart';
+import 'package:be_fit/view/auth/screens/signup_with_phone.dart';
 
 import 'package:be_fit/view/complete_profile_view/complete_profile.dart';
 import 'package:be_fit/view/home/home_screen.dart';
@@ -44,10 +45,10 @@ final goRouter = GoRouter(initialLocation: '/', routes: [
       return const CompleteProfileView();
     },
   ),
-  // GoRoute(
-  //   path: '/chooseGoal',
-  //   builder: (context, state) {
-  //     return const ChooseGoalView();
-  //   },
-  // ),
+  GoRoute(
+    path: '/phoneSignup',
+    builder: (context, state) {
+      return const SignupWithPhone();
+    },
+  ),
 ]);
