@@ -1,4 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:be_fit/common%20widgets/build_snackbar.dart';
+import 'package:be_fit/common%20widgets/lottie_loading_animation.dart';
 import 'package:be_fit/services/fireabase_auth_methods.dart';
 import 'package:be_fit/view/auth/auth_widgets/alternate_options.dart';
 import 'package:be_fit/view/auth/auth_widgets/build_primary_button.dart';
@@ -41,15 +44,43 @@ class _SignUpPageState extends State<SignUpPage> {
   /// Handle form submission
   void submitForm() async {
     if (formKey.currentState!.validate() && checkBoxController == true) {
-      // Process Signup
-      FireabaseAuthMethods(FirebaseAuth.instance).signUpWithEmail(
-          email: emailController.text,
-          password: passController.text,
-          context: context);
+      //! show loading animation
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const LottieLoadingAnimation(
+            opacity: 0.4,
+            height: 100,
+            width: 100,
+          );
+        },
+      );
 
-      buildSnackBar(context, 'Email Verification sent successfully!',
-          bgColor: AppColors.secondaryColorGreen);
-      // context.go('/completeProfile');
+      try {
+        //! Attempt login
+        await FireabaseAuthMethods(FirebaseAuth.instance).signUpWithEmail(
+            email: emailController.text,
+            password: passController.text,
+            context: context);
+
+        //! close the dialog
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
+
+        //! Show success message
+        buildSnackBar(
+          context,
+          'Logged in Successfully!',
+          bgColor: AppColors.secondaryColorGreen,
+        );
+
+        //! Navigate to the next screen -
+        if (context.mounted) context.go('/login');
+      } catch (e) {
+        buildSnackBar(context, e.toString(),
+            bgColor: AppColors.primaryColorRed);
+      }
     } else {
       buildSnackBar(
         context,
