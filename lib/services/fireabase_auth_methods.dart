@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:be_fit/common%20widgets/build_snackbar.dart';
 import 'package:be_fit/common/color_extension.dart';
