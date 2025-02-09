@@ -28,6 +28,7 @@ class BuildTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autovalidateMode: AutovalidateMode.onUnfocus,
       style: AppTextStyles.body1,
       focusNode: focusNode,
       controller: controller,

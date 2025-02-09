@@ -70,6 +70,7 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Column(
                 children: [
                   BuildTextField(
+                    
                     controller: nameController,
                     focusNode: nameFocus,
                     label: 'Full Name',
