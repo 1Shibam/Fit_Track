@@ -21,6 +21,10 @@ class FireabaseAuthMethods {
       await fAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       await emailVerification(context);
+
+      if (!fAuth.currentUser!.emailVerified) {
+        await emailVerification(context);
+      }
     } on FirebaseAuthException catch (e) {
       print(e.code == 'Weak-password');
     }
