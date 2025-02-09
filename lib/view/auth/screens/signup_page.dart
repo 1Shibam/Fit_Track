@@ -47,9 +47,9 @@ class _SignUpPageState extends State<SignUpPage> {
           password: passController.text,
           context: context);
 
-      buildSnackBar(context, 'Signed Up successflly!',
+      buildSnackBar(context, 'Email Verification sent successfully!',
           bgColor: AppColors.secondaryColorGreen);
-      context.go('/completeProfile');
+      // context.go('/completeProfile');
     } else {
       buildSnackBar(
         context,
