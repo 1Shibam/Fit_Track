@@ -26,6 +26,18 @@ class FireabaseAuthMethods {
     }
   }
 
+  //! Login with Email - For the user who already have and account...
+
+  Future<void> loginWithEmail(
+      BuildContext context, String email, String password) async {
+    try {
+      await fAuth.signInWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      buildSnackBar(context, e.message.toString(),
+          bgColor: AppColors.primaryColorRed);
+    }
+  }
+
   //! Email verification can't let fake emails sign up can we?
 
   Future<void> emailVerification(BuildContext context) async {
