@@ -31,6 +31,8 @@ class FireabaseAuthMethods {
   Future<void> emailVerification(BuildContext context) async {
     try {
       await fAuth.currentUser!.sendEmailVerification();
+      buildSnackBar(context, 'Email verification sent!',
+          bgColor: AppColors.secondaryColorGreen);
     } on FirebaseException catch (e) {
       buildSnackBar(context, e.message.toString(),
           bgColor: AppColors.primaryColorRed);
