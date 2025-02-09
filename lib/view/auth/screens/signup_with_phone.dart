@@ -47,8 +47,8 @@ class _SignupWithPhoneState extends State<SignupWithPhone> {
               autoValidateMode: AutovalidateMode.always,
               textStyle: AppTextStyles.body1,
               onInputChanged: (PhoneNumber number) {
-                print(number.phoneNumber);
-                print(number.dialCode);
+                // print(number.phoneNumber);
+                // print(number.dialCode);
               },
               selectorConfig: const SelectorConfig(
                 selectorType: PhoneInputSelectorType.DIALOG,
@@ -68,7 +68,17 @@ class _SignupWithPhoneState extends State<SignupWithPhone> {
               hintText: 'Enter your number',
             ),
             SizedBox(height: 32.h),
-            const BuildPrimaryButton(text: 'Send OTP')
+            const BuildPrimaryButton(text: 'Send OTP'),
+            SizedBox(
+              height: 20.h,
+            ),
+            TextButton(
+                onPressed: () => context.go('/signup'),
+                child: Text(
+                  'Go Back',
+                  style: AppTextStyles.body1
+                      .copyWith(color: AppColors.primaryColorOrange),
+                ))
           ]),
         ),
       ),
