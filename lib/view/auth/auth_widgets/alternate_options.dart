@@ -62,7 +62,13 @@ class AlternateOptions extends StatelessWidget {
               'assets/images/facebook icon.svg',
               height: 48.h,
               width: 48.w,
-            ))
+            )),
+            GestureDetector(
+                child: SvgPicture.asset(
+              'assets/images/phone.svg',
+              height: 48.h,
+              width: 48.w,
+            )),
           ],
         )
       ],
