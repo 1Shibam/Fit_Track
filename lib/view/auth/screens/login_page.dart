@@ -1,8 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:be_fit/common%20widgets/build_snackbar.dart';
+import 'package:be_fit/common%20widgets/lottie_loading_animation.dart';
 import 'package:be_fit/preferences/login_page_preference.dart';
+import 'package:be_fit/services/fireabase_auth_methods.dart';
 import 'package:be_fit/view/auth/auth_widgets/build_primary_button.dart';
 import 'package:be_fit/view/auth/auth_widgets/build_text_field.dart';
 import 'package:be_fit/common/color_extension.dart';
 import 'package:be_fit/common/text_style.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -32,18 +38,65 @@ class _LoginPageState extends State<LoginPage> {
   final formkey = GlobalKey<FormState>();
 
   /// Handle form submission
-  void submitForm() {
+  void submitForm() async {
     if (formkey.currentState!.validate()) {
+      //! showing loading dialog before login starts
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const LottieLoadingAnimation(
+            opacity: 0.4,
+            height: 100,
+            width: 100,
+          );
+        },
+      );
+
+      try {
+        //! Attempting Login
+        await FireabaseAuthMethods(FirebaseAuth.instance)
+            .loginWithEmail(context, emailController.text, passController.text);
+
+        //! Set login preference to true -
+        setLoginPreference(true);
+
+        //! close the dialog
+        if (context.mounted) Navigator.pop(context);
+
+        //! Show success message
+        buildSnackBar(
+          context,
+          'Logged in Successfully!',
+          bgColor: AppColors.secondaryColorGreen,
+        );
+
+        //! Navigate to the next screen -
+        if (context.mounted) context.go('/completeProfile');
+      } catch (e) {
+        buildSnackBar(context, e.toString(),
+            bgColor: AppColors.primaryColorRed);
+      }
       // Process login
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-          'Login Successful!',
-          style: AppTextStyles.body2,
-        ),
-        backgroundColor: AppColors.primaryColorOrange,
-      ));
-      setLoginPreference(true);
+
+      Future.delayed(
+        const Duration(seconds: 3),
+        () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const LottieLoadingAnimation(
+                opacity: 0.4,
+                height: 100,
+                width: 100,
+              );
+            },
+          );
+        },
+      );
       context.go('/completeProfile');
+      buildSnackBar(context, 'Logged in Successfully!',
+          bgColor: AppColors.secondaryColorGreen);
     }
   }
 
