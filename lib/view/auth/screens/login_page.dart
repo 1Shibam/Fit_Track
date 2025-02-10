@@ -2,8 +2,8 @@
 
 import 'package:be_fit/common%20widgets/build_snackbar.dart';
 import 'package:be_fit/common%20widgets/lottie_loading_animation.dart';
-import 'package:be_fit/preferences/login_page_preference.dart';
 import 'package:be_fit/services/fireabase_auth_methods.dart';
+
 import 'package:be_fit/view/auth/auth_widgets/build_primary_button.dart';
 import 'package:be_fit/view/auth/auth_widgets/build_text_field.dart';
 import 'package:be_fit/common/color_extension.dart';
@@ -43,6 +43,7 @@ class _LoginPageState extends State<LoginPage> {
       //! showing loading dialog before login starts
 
       showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return const LottieLoadingAnimation(
@@ -54,48 +55,22 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       try {
-        //! Attempting Login
-        await FireabaseAuthMethods(FirebaseAuth.instance)
-            .loginWithEmail(context, emailController.text, passController.text);
-
-        //! Set login preference to true -
-        setLoginPreference(true);
-
-        //! close the dialog
-        if (context.mounted) Navigator.pop(context);
-
-        //! Show success message
-        buildSnackBar(
-          context,
-          'Logged in Successfully!',
-          bgColor: AppColors.secondaryColorGreen,
-        );
-
-        //! Navigate to the next screen -
+        //Attempting to log in with email and password -
+        await FirebaseAuthMethods(FirebaseAuth.instance).loginWithEmail(
+            context, emailController.text.trim(), passController.text.trim());
+        //check if email is verified -
+        final user = FirebaseAuth.instance.currentUser;
+        if (user != null && user.emailVerified) {
+          Navigator.pop(context);
+          context.go('/completeProfile');
+        } else {
+          Navigator.pop(context);
+        }
       } catch (e) {
+        Navigator.pop(context);
         buildSnackBar(context, e.toString(),
             bgColor: AppColors.primaryColorRed);
       }
-      // Process login
-
-      Future.delayed(
-        const Duration(seconds: 3),
-        () {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return const LottieLoadingAnimation(
-                opacity: 0.4,
-                height: 100,
-                width: 100,
-              );
-            },
-          );
-        },
-      );
-      context.go('/completeProfile');
-      buildSnackBar(context, 'Logged in Successfully!',
-          bgColor: AppColors.secondaryColorGreen);
     }
   }
 
