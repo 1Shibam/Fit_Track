@@ -1,6 +1,7 @@
 import 'package:be_fit/common%20widgets/lottie_loading_animation.dart';
 import 'package:be_fit/common/color_extension.dart';
 import 'package:be_fit/common/text_style.dart';
+import 'package:be_fit/preferences/profile_creation_preference.dart';
 import 'package:be_fit/view/auth/auth_widgets/build_primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,7 +40,6 @@ class CompleteProfileViewState extends State<CompleteProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.neutralColorSoftWhite,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -148,12 +148,16 @@ class CompleteProfileViewState extends State<CompleteProfileView> {
                     );
                     Future.delayed(const Duration(seconds: 1), () {
                       if (context.mounted) {
+                        setProfileSetUpPreference(true);
                         Navigator.pop(context);
                         context.go('/home');
                       }
                     });
                   },
-                  child: const BuildPrimaryButton(text: 'Let\'s Go'))
+                  child: const BuildPrimaryButton(text: 'Let\'s Go')),
+              SizedBox(
+                height: 40.h,
+              )
             ],
           ),
         ),
