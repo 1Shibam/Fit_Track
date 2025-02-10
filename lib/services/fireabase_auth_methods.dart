@@ -5,10 +5,11 @@ import 'package:be_fit/common/color_extension.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 
 class FireabaseAuthMethods {
-  final FirebaseAuth fAuth; //firebase instance
-  FireabaseAuthMethods(this.fAuth);
+  final FirebaseAuth _auth; //firebase instance
+  FireabaseAuthMethods(this._auth);
 
   //! Signup with email
   Future<void> signUpWithEmail(
@@ -18,15 +19,40 @@ class FireabaseAuthMethods {
     //? using context here to pass some widgets like snackbar and alret dialog for proper auth messages
 
     try {
-      await fAuth.createUserWithEmailAndPassword(
+      final userCreds = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+
       await emailVerification(context);
 
-      if (!fAuth.currentUser!.emailVerified) {
-        await emailVerification(context);
+      if (context.mounted) {
+        if (!userCreds.user!.emailVerified) {
+          buildSnackBar(context, 'Please verify your email',
+              bgColor: AppColors.neutralColorMediumGray);
+          await emailVerification(context);
+        }
+        context.go('/completeProfile');
       }
     } on FirebaseAuthException catch (e) {
-      print(e.code == 'Weak-password');
+      String errorMsg = 'An error occured during Signup!!';
+      switch (e.code) {
+        case 'weak-password':
+          errorMsg = 'The password provided is too weak';
+          break;
+        case 'email-already-in-use':
+          errorMsg = 'This email is already in use';
+          break;
+        case 'invalid-email':
+          errorMsg = 'The entered email is invalid';
+          break;
+      }
+      if (context.mounted) {
+        buildSnackBar(context, errorMsg, bgColor: AppColors.primaryColorRed);
+      }
+    } catch (e) {
+      if (context.mounted) {
+        buildSnackBar(context, 'An un expected error occured!!',
+            bgColor: AppColors.primaryColorRed);
+      }
     }
   }
 
@@ -35,7 +61,7 @@ class FireabaseAuthMethods {
   Future<void> loginWithEmail(
       BuildContext context, String email, String password) async {
     try {
-      await fAuth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       buildSnackBar(context, e.message.toString(),
           bgColor: AppColors.primaryColorRed);
@@ -46,7 +72,7 @@ class FireabaseAuthMethods {
 
   Future<void> emailVerification(BuildContext context) async {
     try {
-      await fAuth.currentUser!.sendEmailVerification();
+      await _auth.currentUser!.sendEmailVerification();
       buildSnackBar(context, 'Email verification sent!',
           bgColor: AppColors.secondaryColorGreen);
     } on FirebaseException catch (e) {
