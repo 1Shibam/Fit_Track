@@ -23,9 +23,7 @@ class FirebaseAuthMethods {
 
       if (context.mounted) {
         if (!userCreds.user!.emailVerified) {
-          buildSnackBar(context, 'Please verify your email',
-              bgColor: AppColors.neutralColorMediumGray);
-          await emailVerification(context);
+          await sendEmailVerification(context);
         }
       }
     } on FirebaseAuthException catch (e) {
@@ -60,10 +58,11 @@ class FirebaseAuthMethods {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       String errorMessage = 'Login failed';
+      print(e.code);
 
       switch (e.code) {
-        case 'user-not-found':
-          errorMessage = 'There is no user corresponding to this email';
+        case 'invalid-credential':
+          errorMessage = 'There is no user with this email';
           break;
         case 'wrong-password':
           errorMessage = 'Incorrect password';
@@ -87,7 +86,7 @@ class FirebaseAuthMethods {
 
   //! Email verification can't let fake emails sign up can we?
 
-  Future<void> emailVerification(BuildContext context) async {
+  Future<void> sendEmailVerification(BuildContext context) async {
     try {
       await _auth.currentUser!.sendEmailVerification();
       if (context.mounted) {
