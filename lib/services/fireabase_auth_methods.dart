@@ -63,8 +63,29 @@ class FireabaseAuthMethods {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      buildSnackBar(context, e.message.toString(),
-          bgColor: AppColors.primaryColorRed);
+      String errorMessage = 'Login failed';
+
+      switch (e.code) {
+        case 'user-not-found':
+          errorMessage = 'There is no user corresponding to this email';
+          break;
+        case 'wrong-password':
+          errorMessage = 'Incorrect password';
+          break;
+
+        case 'user-disabled':
+          errorMessage = 'The user account has been disabled';
+          break;
+      }
+      if (context.mounted) {
+        buildSnackBar(context, errorMessage,
+            bgColor: AppColors.primaryColorRed);
+      }
+    } catch (e) {
+      if (context.mounted) {
+        buildSnackBar(context, 'unexpected error occured!',
+            bgColor: AppColors.primaryColorRed);
+      }
     }
   }
 
@@ -73,8 +94,10 @@ class FireabaseAuthMethods {
   Future<void> emailVerification(BuildContext context) async {
     try {
       await _auth.currentUser!.sendEmailVerification();
-      buildSnackBar(context, 'Email verification sent!',
-          bgColor: AppColors.secondaryColorGreen);
+      if (context.mounted) {
+        buildSnackBar(context, 'Email verification sent!',
+            bgColor: AppColors.secondaryColorGreen);
+      }
     } on FirebaseException catch (e) {
       buildSnackBar(context, e.message.toString(),
           bgColor: AppColors.primaryColorRed);
