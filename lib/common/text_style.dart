@@ -34,7 +34,7 @@ class AppTextStyles {
 
   static TextStyle subtitle2 = TextStyle(
     fontFamily: 'Lexend',
-    fontSize: 18.sp,
+    fontSize: 14.sp,
     fontWeight: FontWeight.w600,
     color: Colors.black87,
   );
@@ -42,7 +42,7 @@ class AppTextStyles {
   //! Body Text
   static TextStyle body1 = TextStyle(
     fontFamily: 'Lexend',
-    fontSize: 16.sp,
+    fontSize: 14.sp,
     fontWeight: FontWeight.normal,
     color: Colors.black87,
   );
