@@ -58,9 +58,6 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                       title: 'Track Nutrition',
                       imagePath: 'assets/images/food.png'),
                   const OnBoardingPages(
-                      title: 'Sync with Health Devices',
-                      imagePath: 'assets/images/devices.png'),
-                  const OnBoardingPages(
                       title: 'Get reminders to keep pushing toward your goals.',
                       imagePath: 'assets/images/stay motivated.png'),
                   OnBoardingPages(
@@ -74,7 +71,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                                 WidgetStatePropertyAll(Colors.transparent),
                             shadowColor:
                                 WidgetStatePropertyAll(Colors.transparent)),
-                        onPressed: ()  {
+                        onPressed: () {
                           setOnBoardingStatus(true);
                           context.go('/login');
                         },
@@ -92,7 +89,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 pageController.jumpToPage(index);
               },
               controller: pageController,
-              count: 7, // Total pages
+              count: 6, // Total pages
               effect: WormEffect(
                 radius: 20,
                 dotHeight: 10,
