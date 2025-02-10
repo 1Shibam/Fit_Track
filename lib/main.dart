@@ -1,6 +1,6 @@
-import 'package:be_fit/common/theme.dart';
-import 'package:be_fit/firebase_options.dart';
-import 'package:be_fit/router/app_route_config.dart';
+import 'package:be_fit/core/constants/theme.dart';
+import 'package:be_fit/data/data_sources/remote/firebase_options.dart';
+import 'package:be_fit/presentation/providers/router/app_route_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
