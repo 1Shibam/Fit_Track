@@ -1,3 +1,4 @@
+import 'package:be_fit/common%20widgets/lottie_loading_animation.dart';
 import 'package:be_fit/common/color_extension.dart';
 import 'package:be_fit/common/text_style.dart';
 import 'package:be_fit/view/auth/auth_widgets/build_primary_button.dart';
@@ -135,9 +136,24 @@ class CompleteProfileViewState extends State<CompleteProfileView> {
               ),
               GestureDetector(
                   onTap: () {
-                    context.go('/chooseGoal');
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const LottieLoadingAnimation(
+                          opacity: 0.4,
+                          height: 100,
+                          width: 100,
+                        );
+                      },
+                    );
+                    Future.delayed(const Duration(seconds: 1), () {
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                        context.go('/home');
+                      }
+                    });
                   },
-                  child: const BuildPrimaryButton(text: 'Next'))
+                  child: const BuildPrimaryButton(text: 'Let\'s Go'))
             ],
           ),
         ),
