@@ -2,6 +2,7 @@
 
 import 'package:be_fit/common%20widgets/build_snackbar.dart';
 import 'package:be_fit/common%20widgets/lottie_loading_animation.dart';
+import 'package:be_fit/preferences/login_page_preference.dart';
 import 'package:be_fit/services/fireabase_auth_methods.dart';
 
 import 'package:be_fit/view/auth/auth_widgets/build_primary_button.dart';
@@ -61,10 +62,13 @@ class _LoginPageState extends State<LoginPage> {
         //check if email is verified -
         final user = FirebaseAuth.instance.currentUser;
         if (user != null && user.emailVerified) {
+          setLoginPreference(true);
           Navigator.pop(context);
           context.go('/completeProfile');
         } else {
           Navigator.pop(context);
+          buildSnackBar(context, 'Please verify you email first',
+              bgColor: AppColors.primaryColorRed);
         }
       } catch (e) {
         Navigator.pop(context);
