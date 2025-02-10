@@ -3,6 +3,7 @@
 import 'package:be_fit/common%20widgets/build_snackbar.dart';
 import 'package:be_fit/common%20widgets/lottie_loading_animation.dart';
 import 'package:be_fit/services/fireabase_auth_methods.dart';
+
 import 'package:be_fit/view/auth/auth_widgets/alternate_options.dart';
 import 'package:be_fit/view/auth/auth_widgets/build_primary_button.dart';
 import 'package:be_fit/view/auth/auth_widgets/build_text_field.dart';
@@ -10,6 +11,7 @@ import 'package:be_fit/common/color_extension.dart';
 import 'package:be_fit/common/text_style.dart';
 import 'package:dashed_rect/dashed_rect.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,7 +46,7 @@ class _SignUpPageState extends State<SignUpPage> {
   /// Handle form submission
   void submitForm() async {
     if (formKey.currentState!.validate() && checkBoxController == true) {
-      //! show loading animation
+      // Show loading animation while signing up
       showDialog(
         context: context,
         builder: (context) {
@@ -57,38 +59,25 @@ class _SignUpPageState extends State<SignUpPage> {
       );
 
       try {
-        //! Attempt login
-        await FireabaseAuthMethods(FirebaseAuth.instance).signUpWithEmail(
-            email: emailController.text,
-            password: passController.text,
-            context: context);
-
-        //! close the dialog
-        if (context.mounted) {
-          Navigator.pop(context);
-        }
-
-        //! Show success message
-        buildSnackBar(
-          context,
-          'Logged in Successfully!',
-          bgColor: AppColors.secondaryColorGreen,
+        // Attempt to sign up with email and password
+        await FirebaseAuthMethods(FirebaseAuth.instance).signUpWithEmail(
+          email: emailController.text,
+          password: passController.text,
+          context: context,
         );
 
-        //! Navigate to the next screen -
-        if (context.mounted) context.go('/login');
+        // Close the loading dialog after signup
+        Navigator.pop(context);
+
+        // Navigate to the login page
+        context.go('/login');
       } catch (e) {
+        Navigator.pop(context);
         buildSnackBar(context, e.toString(),
             bgColor: AppColors.primaryColorRed);
       }
     } else {
-      buildSnackBar(
-        context,
-        'Please enter the fields correctly',
-      );
-      setState(() {
-        isAlerted = true;
-      });
+      buildSnackBar(context, 'Please fill out all fields correctly');
     }
   }
 
