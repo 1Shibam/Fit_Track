@@ -72,7 +72,6 @@ class _LoginPageState extends State<LoginPage> {
         );
 
         //! Navigate to the next screen -
-        if (context.mounted) context.go('/completeProfile');
       } catch (e) {
         buildSnackBar(context, e.toString(),
             bgColor: AppColors.primaryColorRed);
