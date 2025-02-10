@@ -67,8 +67,12 @@ class CompleteProfileViewState extends State<CompleteProfileView> {
               _buildCard(
                 title: "Gender",
                 child: DropdownButtonFormField<String>(
-                  decoration:
-                      const InputDecoration(border: OutlineInputBorder()),
+                  decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      label: Text(
+                        'Gender',
+                        style: AppTextStyles.body2,
+                      )),
                   value: selectedGender,
                   onChanged: (String? newValue) {
                     setState(() {
