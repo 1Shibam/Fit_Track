@@ -3,7 +3,7 @@ import 'package:be_fit/common/text_style.dart';
 import 'package:flutter/material.dart';
 
 void buildSnackBar(BuildContext context, String yapp,
-    {Color? bgColor, int? sec}) {
+    {Color? bgColor, int? sec, bool isError = false}) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(
       yapp,
