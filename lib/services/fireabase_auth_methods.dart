@@ -5,11 +5,10 @@ import 'package:be_fit/common/color_extension.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/widgets.dart';
-import 'package:go_router/go_router.dart';
 
-class FireabaseAuthMethods {
+class FirebaseAuthMethods {
   final FirebaseAuth _auth; //firebase instance
-  FireabaseAuthMethods(this._auth);
+  FirebaseAuthMethods(this._auth);
 
   //! Signup with email
   Future<void> signUpWithEmail(
@@ -22,15 +21,12 @@ class FireabaseAuthMethods {
       final userCreds = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
-      await emailVerification(context);
-
       if (context.mounted) {
         if (!userCreds.user!.emailVerified) {
           buildSnackBar(context, 'Please verify your email',
               bgColor: AppColors.neutralColorMediumGray);
           await emailVerification(context);
         }
-        context.go('/completeProfile');
       }
     } on FirebaseAuthException catch (e) {
       String errorMsg = 'An error occured during Signup!!';
