@@ -98,4 +98,23 @@ class FirebaseAuthMethods {
           bgColor: AppColors.primaryColorRed);
     }
   }
+
+  //! Phone sign-in(only for android and IOS )
+  Future<void> singInWithPhoneNum(BuildContext context, String number) async {
+    await _auth.verifyPhoneNumber(
+
+      //? verification complted only works only on android we are checking it that if we received any otp then we will signup with the otp
+      verificationCompleted: (PhoneAuthCredential creadential) async {
+        await _auth.signInWithCredential(creadential);
+      },
+      verificationFailed: (error) {
+        buildSnackBar(context, error.message.toString());
+      },
+      codeSent: (String verificationId, int? forceResendingToken) async{
+        
+
+      },
+      codeAutoRetrievalTimeout: (verificationId) {},
+    );
+  }
 }
