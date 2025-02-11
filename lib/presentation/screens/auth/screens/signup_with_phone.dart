@@ -74,9 +74,12 @@ class _SignupWithPhoneState extends ConsumerState<SignupWithPhone> {
             SizedBox(height: 32.h),
             GestureDetector(
                 onTap: () {
-                  // print(num);
-                  // showOtpDialog(
-                  //     codeController: num, context: context, onPressed: () {}, ref:ref );
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ShowOTPDialog(phnNumber: num);
+                    },
+                  );
                 },
                 child: const BuildPrimaryButton(text: 'Send OTP')),
             SizedBox(
