@@ -1,114 +1,111 @@
-import 'package:be_fit/core/constants/color_extension.dart';
-import 'package:be_fit/core/constants/text_style.dart';
-import 'package:be_fit/presentation/providers/router/app_route_config.dart';
-import 'package:be_fit/presentation/screens/auth/auth_widgets/build_text_field.dart';
-import 'package:be_fit/presentation/widgets/common%20widgets/build_snackbar.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
-final countDownProvider = StateProvider<int>((ref) => 30);
+class ShowOTPDialog extends StatefulWidget {
+  final String phnNumber;
+  final Function()? onVerify;
+  final Function()? onResend;
 
-void showOtpDialog({
-  required String codeController,
-  required BuildContext context,
-  required VoidCallback onPressed,
-  required WidgetRef ref,
-}) {
-  showDialog(
-    barrierDismissible: false,
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        contentPadding: EdgeInsets.all(12.w),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Enter OTP',
-              style: AppTextStyles.heading3,
-            ),
-            SizedBox(
-              height: 12.h,
-            ),
-            RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                    text: 'Enter the OTP sent to ',
-                    style: AppTextStyles.subtitle2,
-                    children: [
-                      TextSpan(
-                          text: codeController.substring(0, 5).padRight(
-                                codeController.length,
-                                'X',
-                              ),
-                          style: AppTextStyles.body1.copyWith(
-                              color: const Color.fromARGB(255, 0, 120, 6)))
-                    ])),
-            SizedBox(
-              height: 12.h,
-            ),
-            const BuildTextField(
-              label: 'Enter OTP',
-              preWidget: Icon(Icons.verified),
-            )
-          ],
-        ),
-        actions: [
-          TextButton(
-              onPressed: () {
-                context.go('/signup');
-                buildSnackBar(context, 'Something went wrong!',
-                    bgColor: AppColors.primaryColorRed);
-              },
-              child: Text(
-                'Cancel',
-                style: AppTextStyles.body2,
-              )),
-          Consumer(
-            builder: (context, ref, child) {
-              final countDown = ref.watch(countDownProvider);
-              return countDown > 0
-                  ? Text('Resend in $countDown s')
-                  : TextButton(
-                      onPressed: () {
-                        // Reset countdown and restart it
-                        ref.read(countDownProvider.notifier).state = 30;
-                        startCountdown(ref);
-                      },
-                      child: Text(
-                        'Resend',
-                        style: AppTextStyles.body2,
-                      ));
-            },
-          ),
-          TextButton(
-              onPressed: () {
-                ref.read(countDownProvider.notifier).state = 30;
-                startCountdown(ref);
-              },
-              child: Text(
-                'Verify',
-                style: AppTextStyles.body2,
-              )),
-        ],
-      );
-    },
-  );
-  startCountdown(ref); // Start countdown immediately when the dialog is shown.
+  const ShowOTPDialog({
+    super.key,
+    required this.phnNumber,
+    this.onVerify,
+    this.onResend,
+  });
+
+  @override
+  State<ShowOTPDialog> createState() => _ShowOTPDialogState();
 }
 
-void startCountdown(WidgetRef ref) {
-  // Use Future.delayed to update the countdown every second
-  Future.delayed(Duration.zero, () {
-    // Every second, decrement the countdown until it reaches 0
-    for (int i = 30; i >= 0; i--) {
-      Future.delayed(Duration(seconds: 30 - i), () {
-        ref.read(countDownProvider.notifier).state = i;
-      });
-    }
-  });
+class _ShowOTPDialogState extends State<ShowOTPDialog> {
+  Timer? _timer;
+  int _timeLeft = 0;
+  bool _isResendDisabled = false;
+  final TextEditingController _otpController = TextEditingController();
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _otpController.dispose();
+    super.dispose();
+  }
+
+  void _startTimer() {
+    setState(() {
+      _timeLeft = 20;
+      _isResendDisabled = true;
+    });
+
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_timeLeft > 0) {
+        setState(() {
+          _timeLeft--;
+        });
+      } else {
+        setState(() {
+          _isResendDisabled = false;
+        });
+        _timer?.cancel();
+      }
+    });
+  }
+
+  void _handleResend() {
+    _startTimer();
+    widget.onResend?.call();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Verify OTP'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: _otpController,
+            keyboardType: TextInputType.number,
+            maxLength: 6,
+            decoration: const InputDecoration(
+              hintText: 'Enter OTP',
+              counterText: '',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: _isResendDisabled ? null : _handleResend,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey[200],
+                    foregroundColor: Colors.black,
+                  ),
+                  child: Text(
+                    _isResendDisabled ? 'Resend in ${_timeLeft}s' : 'Resend',
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    widget.onVerify?.call();
+                    Navigator.of(context).pop(_otpController.text);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text('Verify'),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }
