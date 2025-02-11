@@ -4,18 +4,19 @@ import 'package:be_fit/presentation/screens/auth/auth_widgets/build_primary_butt
 import 'package:be_fit/presentation/screens/auth/auth_widgets/show_otp_dialog.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
-class SignupWithPhone extends StatefulWidget {
+class SignupWithPhone extends ConsumerStatefulWidget {
   const SignupWithPhone({super.key});
 
   @override
-  State<SignupWithPhone> createState() => _SignupWithPhoneState();
+  ConsumerState<SignupWithPhone> createState() => _SignupWithPhoneState();
 }
 
-class _SignupWithPhoneState extends State<SignupWithPhone> {
+class _SignupWithPhoneState extends ConsumerState<SignupWithPhone> {
   final TextEditingController phoneNumController = TextEditingController();
 
   String num = '';
@@ -73,9 +74,9 @@ class _SignupWithPhoneState extends State<SignupWithPhone> {
             SizedBox(height: 32.h),
             GestureDetector(
                 onTap: () {
-                  print(num);
-                  showOtpDialog(
-                      codeController: num, context: context, onPressed: () {});
+                  // print(num);
+                  // showOtpDialog(
+                  //     codeController: num, context: context, onPressed: () {}, ref:ref );
                 },
                 child: const BuildPrimaryButton(text: 'Send OTP')),
             SizedBox(
