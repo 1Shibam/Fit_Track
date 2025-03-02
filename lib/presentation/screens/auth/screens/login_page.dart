@@ -2,7 +2,7 @@
 
 import 'package:be_fit/presentation/widgets/common%20widgets/build_snackbar.dart';
 import 'package:be_fit/presentation/widgets/common%20widgets/lottie_loading_animation.dart';
-import 'package:be_fit/data/data_sources/local/preferences/login_page_preference.dart';
+
 import 'package:be_fit/data/data_sources/remote/fireabase_auth_methods.dart';
 
 import 'package:be_fit/presentation/screens/auth/auth_widgets/build_primary_button.dart';
@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
         //check if email is verified -
         final user = FirebaseAuth.instance.currentUser;
         if (user != null && user.emailVerified) {
-          setLoginPreference(true);
+    
           Navigator.pop(context);
           context.go('/completeProfile');
         } else {
