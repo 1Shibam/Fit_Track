@@ -61,9 +61,14 @@ class _LoginPageState extends State<LoginPage> {
             context, emailController.text.trim(), passController.text.trim());
         //check if email is verified -
         final user = FirebaseAuth.instance.currentUser;
-        if (user != null && user.emailVerified) {
-    
-          Navigator.pop(context);
+
+        //close loading
+        Navigator.pop(context);
+        if (user == null) {
+          
+          return;
+        }
+        if (user.emailVerified) {
           context.go('/completeProfile');
         } else {
           Navigator.pop(context);

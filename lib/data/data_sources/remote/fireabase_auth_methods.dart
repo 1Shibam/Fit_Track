@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
+import 'package:be_fit/presentation/screens/auth/auth_widgets/show_otp_dialog.dart';
 import 'package:be_fit/presentation/widgets/common%20widgets/build_snackbar.dart';
 import 'package:be_fit/core/constants/color_extension.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -101,8 +102,8 @@ class FirebaseAuthMethods {
 
   //! Phone sign-in(only for android and IOS )
   Future<void> singInWithPhoneNum(BuildContext context, String number) async {
+    TextEditingController phnNumber = TextEditingController();
     await _auth.verifyPhoneNumber(
-
       //? verification complted only works only on android we are checking it that if we received any otp then we will signup with the otp
       verificationCompleted: (PhoneAuthCredential creadential) async {
         await _auth.signInWithCredential(creadential);
@@ -110,9 +111,14 @@ class FirebaseAuthMethods {
       verificationFailed: (error) {
         buildSnackBar(context, error.message.toString());
       },
-      codeSent: (String verificationId, int? forceResendingToken) async{
-        
-
+      codeSent: (String verificationId, int? forceResendingToken) async {
+        ShowOTPDialog(
+          phnNumber: phnNumber.text,
+          onVerify: () async {
+            PhoneAuthCredential phoneAuth = PhoneAuthProvider.credential(
+                verificationId: verificationId, smsCode: phnNumber.text);
+          },
+        );
       },
       codeAutoRetrievalTimeout: (verificationId) {},
     );
