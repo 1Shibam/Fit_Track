@@ -1,14 +1,13 @@
-// ignore_for_file: use_build_context_synchronously, avoid_print
 
-import 'package:be_fit/presentation/screens/auth/auth_widgets/show_otp_dialog.dart';
 import 'package:be_fit/presentation/widgets/common%20widgets/build_snackbar.dart';
 import 'package:be_fit/core/constants/color_extension.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import 'package:flutter/widgets.dart';
 
 class FirebaseAuthMethods {
-  final FirebaseAuth _auth; //firebase instance
+  final FirebaseAuth _auth; //initialize firebase instance
   FirebaseAuthMethods(this._auth);
 
   //! Signup with email
@@ -100,27 +99,42 @@ class FirebaseAuthMethods {
     }
   }
 
-  //! Phone sign-in(only for android and IOS )
-  Future<void> singInWithPhoneNum(BuildContext context, String number) async {
-    TextEditingController phnNumber = TextEditingController();
-    await _auth.verifyPhoneNumber(
-      //? verification complted only works only on android we are checking it that if we received any otp then we will signup with the otp
-      verificationCompleted: (PhoneAuthCredential creadential) async {
-        await _auth.signInWithCredential(creadential);
-      },
-      verificationFailed: (error) {
-        buildSnackBar(context, error.message.toString());
-      },
-      codeSent: (String verificationId, int? forceResendingToken) async {
-        ShowOTPDialog(
-          phnNumber: phnNumber.text,
-          onVerify: () async {
-            PhoneAuthCredential phoneAuth = PhoneAuthProvider.credential(
-                verificationId: verificationId, smsCode: phnNumber.text);
-          },
-        );
-      },
-      codeAutoRetrievalTimeout: (verificationId) {},
-    );
-  }
+
+
+  // //! Phone sign-in(only for android and IOS )
+  // Future<void> signInWithPhone(BuildContext context, String phoneNumber) async {
+  //   TextEditingController codeController = TextEditingController();
+  //   await _auth.verifyPhoneNumber(
+  //     phoneNumber: phoneNumber,
+  //     //it only works for android with this we are checking if we have receieved any otp on the phone or not it wont be necessary for user to fill in that otp it will be automatic
+  //     verificationCompleted: (phoneAuthCredential) async {
+  //       //verification completed successful -
+  //       await _auth.signInWithCredential(phoneAuthCredential);
+  //     },
+  //     verificationFailed: (error) {
+  //       //verification failed
+  //       buildSnackBar(
+  //           context, 'Verification Failet Please try again - ${error.message}',
+  //           bgColor: AppColors.primaryColorRed);
+  //     },
+  //     //in this the user has to enter the otp mainly for ios as androids handle this automatically
+  //     codeSent: (verificationId, forceResendingToken) async {
+  //       //code sent -
+  //       ShowOTPDialog(
+  //           codeController: codeController,
+  //           context: context,
+  //           onPressed: () async {
+  //             PhoneAuthCredential cred = PhoneAuthProvider.credential(
+  //                 verificationId: verificationId,
+  //                 smsCode: codeController.text.trim());
+  //             await _auth.signInWithCredential(cred);
+  //             if(context.mounted)Navigator.of(context).pop();
+  //           });
+
+  //       buildSnackBar(context, 'OTP Sent',
+  //           bgColor: AppColors.secondaryColorGreen);
+  //     },
+  //     codeAutoRetrievalTimeout: (verificationId) {},
+  //   );
+  // }
 }

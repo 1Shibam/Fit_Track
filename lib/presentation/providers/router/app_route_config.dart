@@ -1,54 +1,105 @@
 import 'package:be_fit/presentation/screens/auth/screens/login_page.dart';
 import 'package:be_fit/presentation/screens/auth/screens/signup_page.dart';
-import 'package:be_fit/presentation/screens/auth/screens/signup_with_phone.dart';
+
 
 import 'package:be_fit/presentation/screens/complete_profile_view/complete_profile.dart';
 import 'package:be_fit/presentation/screens/home/home_screen.dart';
 import 'package:be_fit/presentation/screens/on%20boarding/on_boarding_view.dart';
 import 'package:be_fit/presentation/screens/splash/splash_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final goRouter = GoRouter(initialLocation: '/', routes: [
   GoRoute(
     path: '/',
-    builder: (context, state) {
-      return const SplashScreen();
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        child: const SplashScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+            child: child,
+          );
+        },
+      );
     },
   ),
   GoRoute(
     path: '/login',
-    builder: (context, state) {
-      return const LoginPage();
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        child: const LoginPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+            child: child,
+          );
+        },
+      );
     },
   ),
   GoRoute(
     path: '/signup',
-    builder: (context, state) {
-      return const SignUpPage();
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        child: const SignUpPage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+            child: child,
+          );
+        },
+      );
     },
   ),
   GoRoute(
     path: '/boarding',
-    builder: (context, state) {
-      return const OnBoardingView();
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        child: const OnBoardingView(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+            child: child,
+          );
+        },
+      );
     },
   ),
   GoRoute(
     path: '/home',
-    builder: (context, state) {
-      return const HomeScreen();
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        child: const HomeScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+            child: child,
+          );
+        },
+      );
     },
   ),
   GoRoute(
     path: '/completeProfile',
-    builder: (context, state) {
-      return const CompleteProfileView();
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        transitionDuration: const Duration(seconds: 1),
+        key: state.pageKey,
+        child: const CompleteProfileView(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+            child: child,
+          );
+        },
+      );
     },
   ),
-  GoRoute(
-    path: '/phoneSignup',
-    builder: (context, state) {
-      return const SignupWithPhone();
-    },
-  ),
+
 ]);
